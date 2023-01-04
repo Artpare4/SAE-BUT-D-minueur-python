@@ -20,7 +20,7 @@ def type_coordonnee(coord: tuple) -> bool:
 
 def construireCoordonnee(num_ligne:int,num_colonne:int)->tuple:
     if type(num_ligne)!=int or type(num_colonne)!=int:
-        raise TypeError ("« construireCoordonnee : Le numéro de ligne type_du_premier_paramètre ou le numéro de colonne type_du_second_paramètre ne sont pas des entiers")
+        raise TypeError ("« construireCoordonnee : Le numéro de ligne num_ligne ou le numéro de colonne num_colonne ne sont pas des entiers")
     elif num_ligne<0 or num_colonne<0:
         raise ValueError("construireCoordonnee : Le numéro de ligne (valeur_de_la_ligne) ou de colonne (valeur_de_la_colonne) ne sont pas positifs")
     return (num_ligne,num_colonne)
