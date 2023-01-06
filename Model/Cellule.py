@@ -20,3 +20,13 @@ def type_cellule(cell: dict) -> bool:
         and (0 <= cell[const.CONTENU] <= 8 or cell[const.CONTENU] == const.ID_MINE)
 
 
+def isContenuCorrect(val:int)->bool:
+    res=True
+    if type(val)==int:
+        if val!=const.ID_MINE:
+            if (val<0 or  val>8) :
+                res=False
+    else:
+        res=False
+    return res
+
