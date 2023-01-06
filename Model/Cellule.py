@@ -30,3 +30,12 @@ def isContenuCorrect(val:int)->bool:
         res=False
     return res
 
+def construireCellule(val:int=0,visi:bool=False)->dict:
+    if type(visi)!=bool:
+        raise TypeError(f"construireCellule : le second paramètre {type(visi)} n’est pas un booléen")
+    if val != const.ID_MINE:
+        if (val < 0 or val > 8):
+            raise ValueError(f"construireCellule : le contenu {val} n’est pas correct ")
+    dictio={const.CONTENU:val,const.VISIBLE:visi}
+    return dictio
+
