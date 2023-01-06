@@ -39,3 +39,19 @@ def construireCellule(val:int=0,visi:bool=False)->dict:
     dictio={const.CONTENU:val,const.VISIBLE:visi}
     return dictio
 
+def getContenuCellule(d:dict)->int:
+    if type_cellule(d)!=True:
+        raise TypeError("getContenuCellule : Le paramètre n’est pas une cellule")
+    return d[const.CONTENU]
+
+def isVisibleCellule(d:dict)->bool:
+    if type_cellule(d) == False:
+        raise TypeError("isVisibleCellule : Le paramètre n’est pas une cellule.")
+    return d[const.VISIBLE]
+
+def setContenuCellule(d:dict,val:int)->None:
+    if val != const.ID_MINE:
+        if (val < 0 or val > 8):
+            raise ValueError(f"setContenuCellule : la valeur du contenu {val} n’est pas correcte")
+    d[const.CONTENU] = val
+    return None
