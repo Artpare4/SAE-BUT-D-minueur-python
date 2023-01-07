@@ -96,5 +96,27 @@ def getCelluleGrilleDemineur(grille:list,coord:tuple)->dict:
         raise IndexError("getCelluleGrilleDemineur : coordonnée non contenue dans la grille")
     return grille[coord[0]][coord[1]]
 
+def getContenuGrilleDemineur(grille:list,coord:tuple)->int:
+    return getCelluleGrilleDemineur(grille,coord)[const.CONTENU]
 
+def  setContenuGrilleDemineur(grille:list,coord:tuple,val:int)->None:
+    if type(val)!=int:
+        raise TypeError("setContenuGrilleDemineur: le 3ème paramètre n'est pas un entier ")
+    if val!=const.ID_MINE:
+        if val<0 or val>8:
+            raise ValueError(f"setContenuGrilleDemineur: le contenu {val} n'est pas correct ")
+    getCelluleGrilleDemineur(grille,coord)[const.CONTENU]=val
+    return None
+
+def isVisibleGrilleDemineur(grille:list,coord:tuple)->bool:
+    return getCelluleGrilleDemineur(grille,coord)[const.VISIBLE]
+
+def setVisibleGrilleDemineur(grille:list,coord:tuple,visi:bool)->None:
+    if type(visi)!=bool:
+        raise TypeError("setVisibleGrilleDemineur: ")
+    getCelluleGrilleDemineur(grille,coord)[const.VISIBLE]=visi
+    return None
+
+def contientMineGrilleDemineur(grille:list,coord:tuple)->bool:
+    return getCelluleGrilleDemineur(grille,coord)[const.CONTENU]==const.ID_MINE
 
