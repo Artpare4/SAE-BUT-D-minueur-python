@@ -30,17 +30,17 @@ def isContenuCorrect(val:int)->bool:
         res=False
     return res
 
-def construireCellule(val:int=0,visi:bool=False)->dict:
-    if type(visi)!=bool:
-        raise TypeError(f"construireCellule : le second paramètre {type(visi)} n’est pas un booléen")
+def construireCellule(val:int=0,visible:bool=False)->dict:
+    if type(visible)!=bool:
+        raise TypeError(f"construireCellule : le second paramètre {type(visible)} n’est pas un booléen")
     if val != const.ID_MINE:
         if (val < 0 or val > 8):
             raise ValueError(f"construireCellule : le contenu {val} n’est pas correct ")
-    dictio={const.CONTENU:val,const.VISIBLE:visi}
+    dictio={const.CONTENU:val,const.VISIBLE:visible}
     return dictio
 
 def getContenuCellule(d:dict)->int:
-    if type_cellule(d)!=True:
+    if type_cellule(d)==False:
         raise TypeError("getContenuCellule : Le paramètre n’est pas une cellule")
     return d[const.CONTENU]
 
@@ -50,8 +50,27 @@ def isVisibleCellule(d:dict)->bool:
     return d[const.VISIBLE]
 
 def setContenuCellule(d:dict,val:int)->None:
+    if type(val)!=int:
+        raise TypeError("setContenuCellule : Le second paramètre n’est pas un entier")
     if val != const.ID_MINE:
         if (val < 0 or val > 8):
             raise ValueError(f"setContenuCellule : la valeur du contenu {val} n’est pas correcte")
+    if type_cellule(d)==False:
+        raise TypeError("setContenuCellule : Le premier paramètre n’est pas une cellule.")
+
     d[const.CONTENU] = val
     return None
+
+def setVisibleCellule(d:dict,visi:bool)->None:
+    if type_cellule(d) == False:
+        raise TypeError("setVisibleCellule : Le premier paramètre n’est pas une cellule.")
+    if type(visi)!=bool:
+        raise TypeError("setVisibleCellule : Le second paramètre n’est pas un booléen")
+    d[const.VISIBLE]=visi
+    return None
+
+def contientMineCellule(d:dict)->bool:
+    if type_cellule(d)==False:
+        raise TypeError("contientMineCellule : Le paramètre n’est pas une cellule")
+    return d[const.CONTENU]==const.ID_MINE
+
