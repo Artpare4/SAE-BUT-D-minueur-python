@@ -126,11 +126,24 @@ def getCoordonneeVoisinsGrilleDemineur(grille:list,coord:tuple)->list:
     if isCoordonneeCorrecte(grille,coord)==False:
         raise IndexError(" getCoordonneeVoisinsGrilleDemineur : la coordonnée n’est pas dans la grille")
     res=[]
-    print(coord)
     for i in range(coord[0]-1,coord[0]+2):
         for j in range(coord[1]-1,coord[1]+2):
-            print(i,j)
             if isCoordonneeCorrecte(grille,(i,j))==True and (i,j)!=coord:
                 res.append((i,j))
     return res
+
+def placerMinesGrilleDemineur(grille:list,nb:int,coord:tuple)->None:
+    if nb<=0 or (getNbLignesGrilleDemineur(grille)*(getNbColonnesGrilleDemineur(grille)))==nb:
+        raise ValueError(" placerMinesGrilleDemineur : Nombre de bombes à placer incorrect")
+    if isCoordonneeCorrecte(grille, coord) == False:
+        raise IndexError("placerMinesGrilleDemineur : la coordonnée n’est pas dans la grille")
+    lst=[]
+    for i in range(getNbLignesGrilleDemineur(grille)):
+        for j in range(getNbColonnesGrilleDemineur(grille)):
+            if (i,j)!=coord:
+                lst.append((i,j))
+    shuffle(lst)
+    for i in range(nb):
+        setContenuGrilleDemineur(grille,lst[i],const.ID_MINE)
+    return None
 
