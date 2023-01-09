@@ -147,3 +147,14 @@ def placerMinesGrilleDemineur(grille:list,nb:int,coord:tuple)->None:
         setContenuGrilleDemineur(grille,lst[i],const.ID_MINE)
     return None
 
+def compterMinesVoisinesGrilleDemineur(grille:list)->None:
+    for i in range(getNbLignesGrilleDemineur(grille)):
+        for j in range(getNbColonnesGrilleDemineur(grille)):
+            if contientMineGrilleDemineur(grille,(i,j))==False:
+                lst=getCoordonneeVoisinsGrilleDemineur(grille,(i,j))
+                nb=0
+                for coord in range(len(lst)):
+                    if getContenuGrilleDemineur(grille,lst[coord])==const.ID_MINE:
+                        nb+=1
+                setContenuGrilleDemineur(grille,(i,j),nb)
+    return None
