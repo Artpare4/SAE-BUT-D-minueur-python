@@ -85,3 +85,17 @@ def getAnnotationCellule(d:dict)->str:
     if type_cellule(d)==False:
         raise TypeError(f"getAnnotationCellule : le paramètre {d} n’est pas une cellule")
     return d.get(const.ANNOTATION,None)
+
+def changeAnnotationCellule(d:dict)->None:
+    if type_cellule(d)==False:
+        raise TypeError("changeAnnotationCellule : le paramètre n’est pas une cellule ")
+    val=[None,const.FLAG,const.DOUTE]
+    #si l'index est égal à 2-> on retourne à l'index 0
+    i=val.index(getAnnotationCellule(d))
+    if i==2:
+        i=0
+        d[const.ANNOTATION]=val[i]
+    else:
+        i+=1
+        d[const.ANNOTATION] = val[i]
+    return None
