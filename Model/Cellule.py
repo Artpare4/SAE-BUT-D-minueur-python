@@ -30,13 +30,13 @@ def isContenuCorrect(val:int)->bool:
         res=False
     return res
 
-def construireCellule(val:int=0,visible:bool=False)->dict:
+def construireCellule(val:int=0,visible:bool=False,annotation:str=None)->dict:
     if type(visible)!=bool:
         raise TypeError(f"construireCellule : le second paramètre {type(visible)} n’est pas un booléen")
     if val != const.ID_MINE:
         if (val < 0 or val > 8):
             raise ValueError(f"construireCellule : le contenu {val} n’est pas correct ")
-    dictio={const.CONTENU:val,const.VISIBLE:visible}
+    dictio={const.CONTENU:val,const.VISIBLE:visible,const.ANNOTATION:annotation}
     return dictio
 
 def getContenuCellule(d:dict)->int:
@@ -74,3 +74,28 @@ def contientMineCellule(d:dict)->bool:
         raise TypeError("contientMineCellule : Le paramètre n’est pas une cellule")
     return d[const.CONTENU]==const.ID_MINE
 
+def isAnnotationCorrecte(annotation:str)->bool:
+    val=[None,const.DOUTE,const.FLAG]
+    res=False
+    if annotation in val :
+        res=True
+    return res
+
+def getAnnotationCellule(d:dict)->str:
+    if type_cellule(d)==False:
+        raise TypeError(f"getAnnotationCellule : le paramètre {d} n’est pas une cellule")
+    return d.get(const.ANNOTATION,None)
+
+def changeAnnotationCellule(d:dict)->None:
+    if type_cellule(d)==False:
+        raise TypeError("changeAnnotationCellule : le paramètre n’est pas une cellule ")
+    val=[None,const.FLAG,const.DOUTE]
+    #si l'index est égal à 2-> on retourne à l'index 0
+    i=val.index(getAnnotationCellule(d))
+    if i==2:
+        i=0
+        d[const.ANNOTATION]=val[i]
+    else:
+        i+=1
+        d[const.ANNOTATION] = val[i]
+    return None

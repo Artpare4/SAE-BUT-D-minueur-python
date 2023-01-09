@@ -145,10 +145,39 @@ def placerMinesGrilleDemineur(grille:list,nb:int,coord:tuple)->None:
     shuffle(lst)
     for i in range(nb):
         setContenuGrilleDemineur(grille,lst[i],const.ID_MINE)
+    compterMinesVoisinesGrilleDemineur(grille)
     return None
 
 def compterMinesVoisinesGrilleDemineur(grille:list)->None:
     for i in range(getNbLignesGrilleDemineur(grille)):
         for j in range(getNbColonnesGrilleDemineur(grille)):
-            setContenuGrilleDemineur(grille,(i,j),(len(getCoordonneeVoisinsGrilleDemineur(grille,(i,j)))))
+            if contientMineGrilleDemineur(grille,(i,j))==False:
+                lst=getCoordonneeVoisinsGrilleDemineur(grille,(i,j))
+                nb=0
+                for coord in range(len(lst)):
+                    if getContenuGrilleDemineur(grille,lst[coord])==const.ID_MINE:
+                        nb+=1
+                setContenuGrilleDemineur(grille,(i,j),nb)
     return None
+
+
+def getNbMinesGrilleDemineur(grille: list) -> int:
+    if type_grille_demineur(grille) == False:
+        raise ValueError("getNbMinesGrilleDemineur : le paramètre n’est pas une grille")
+    nb=0
+    for i in range(getNbLignesGrilleDemineur(grille)):
+        for j in range(getNbColonnesGrilleDemineur(grille)):
+            if contientMineGrilleDemineur(grille,(i,j))==True:
+                nb+=1
+    return nb
+
+def getAnnotationGrilleDemineur(grille:list,coord:tuple)->None:
+    return getCelluleGrilleDemineur(grille,coord)[const.ANNOTATION]
+
+def getMinesRestantesGrilleDemineur(grille: list) -> int:
+    nb=getNbMinesGrilleDemineur(grille)
+    #for i in range(getNbLignesGrilleDemineur(grille)):
+    #    for j in range(getNbColonnesGrilleDemineur(grille)):
+    #        if getAnnotationGrilleDemineur(grille,(i,j))==const.FLAG and  contientMineGrilleDemineur(grille,(i,j))==True:
+    #          nb-=1
+    return nb
