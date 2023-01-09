@@ -80,3 +80,8 @@ def isAnnotationCorrecte(annotation:str)->bool:
     if annotation in val :
         res=True
     return res
+
+def getAnnotationCellule(d:dict)->str:
+    if type_cellule(d)==False:
+        raise TypeError(f"getAnnotationCellule : le paramètre {d} n’est pas une cellule")
+    return d.get(const.ANNOTATION,None)
