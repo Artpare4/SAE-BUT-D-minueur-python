@@ -145,6 +145,7 @@ def placerMinesGrilleDemineur(grille:list,nb:int,coord:tuple)->None:
     shuffle(lst)
     for i in range(nb):
         setContenuGrilleDemineur(grille,lst[i],const.ID_MINE)
+    compterMinesVoisinesGrilleDemineur(grille)
     return None
 
 def compterMinesVoisinesGrilleDemineur(grille:list)->None:
