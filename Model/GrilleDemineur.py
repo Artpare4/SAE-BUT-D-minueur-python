@@ -204,7 +204,8 @@ def gagneGrilleDemineur(grille:list)->bool:
         while j < getNbColonnesGrilleDemineur(grille):
             if contientMineGrilleDemineur(grille, (i, j)) == True :
                 if isVisibleGrilleDemineur(grille, (i, j)) == True:
-                    res = False
+                    if getAnnotationGrilleDemineur(grille,(i,j))==const.FLAG:
+                        res = False
             elif contientMineGrilleDemineur(grille, (i, j)) == False:
                 if isVisibleGrilleDemineur(grille,(i,j))==False:
                     res=False
