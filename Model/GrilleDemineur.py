@@ -195,3 +195,20 @@ def perduGrilleDemineur(grille:list)->bool:
         j = 0
         i+=1
     return res
+
+def gagneGrilleDemineur(grille:list)->bool:
+    res = True
+    i = 0
+    j = 0
+    while i < getNbLignesGrilleDemineur(grille) and res == True:
+        while j < getNbColonnesGrilleDemineur(grille):
+            if contientMineGrilleDemineur(grille, (i, j)) == True :
+                if isVisibleGrilleDemineur(grille, (i, j)) == True:
+                    res = False
+            elif contientMineGrilleDemineur(grille, (i, j)) == False:
+                if isVisibleGrilleDemineur(grille,(i,j))==False:
+                    res=False
+            j += 1
+        j = 0
+        i += 1
+    return res
