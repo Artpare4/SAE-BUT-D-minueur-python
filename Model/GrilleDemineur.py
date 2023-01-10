@@ -193,5 +193,5 @@ def perduGrilleDemineur(grille:list)->bool:
                     res=True
             j+=1
         j = 0
-
+        i+=1
     return res
