@@ -213,3 +213,9 @@ def gagneGrilleDemineur(grille:list)->bool:
         j = 0
         i += 1
     return res
+
+def reinitialiserGrilleDemnieur(grille:list)->None:
+    for i in range(getNbLignesGrilleDemineur(grille)):
+        for j in range(getNbColonnesGrilleDemineur(grille)):
+            reinitialiserCellule(grille[i][j])
+    return None
