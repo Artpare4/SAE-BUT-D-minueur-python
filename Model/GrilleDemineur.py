@@ -200,12 +200,12 @@ def gagneGrilleDemineur(grille:list)->bool:
     j = 0
     while i < getNbLignesGrilleDemineur(grille) and res==True:
         while j < getNbColonnesGrilleDemineur(grille):
-            if contientMineGrilleDemineur(grille, (i, j)) == True :
-                if isVisibleGrilleDemineur(grille, (i, j)) == True:
-                    if getAnnotationGrilleDemineur(grille,(i,j))==const.FLAG:
+            if contientMineGrilleDemineur(grille, (i, j)) == True and isVisibleGrilleDemineur(grille, (i, j)) == True and getAnnotationGrilleDemineur(grille,(i,j))==const.FLAG:
+                #if isVisibleGrilleDemineur(grille, (i, j)) == True:
+                    #if getAnnotationGrilleDemineur(grille,(i,j))==const.FLAG:
                         res = False
-            elif contientMineGrilleDemineur(grille, (i, j)) == False:
-                if isVisibleGrilleDemineur(grille,(i,j))==False:
+            elif contientMineGrilleDemineur(grille, (i, j)) == False and isVisibleGrilleDemineur(grille,(i,j))==False:
+                #if isVisibleGrilleDemineur(grille,(i,j))==False:
                     res=False
             j += 1
         j = 0
@@ -217,18 +217,29 @@ def perduGrilleDemineur(grille:list)->bool:
     i=0
     j=0
     while i<getNbLignesGrilleDemineur(grille) and  res==False:
-        while j<getNbColonnesGrilleDemineur(grille):
+        while j<getNbColonnesGrilleDemineur(grille) and not res:
             if contientMineGrilleDemineur(grille,(i,j))==True:
                 if isVisibleGrilleDemineur(grille,(i,j))==True:
                     res=True
             j+=1
         j = 0
         i+=1
-
     return res
-def reinitialiserGrilleDemnieur(grille:list)->None:
+def reinitialiserGrilleDemineur(grille:list)->None:
     for i in range(getNbLignesGrilleDemineur(grille)):
         for j in range(getNbColonnesGrilleDemineur(grille)):
             reinitialiserCellule(grille[i][j])
     return None
 
+res=set()
+def decouvrirGrilleDemineur(grille:list,coord:tuple)->set:
+    voisin=getCoordonneeVoisinsGrilleDemineur(grille,coord)
+    global res
+    for i in voisin:
+        if i not in res:
+            if contientMineGrilleDemineur(grille,i)==False:
+                res.add(i)
+                if getContenuGrilleDemineur(grille,i)==0:
+                    decouvrirGrilleDemineur(grille,i)
+
+    return res
