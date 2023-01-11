@@ -154,8 +154,8 @@ def compterMinesVoisinesGrilleDemineur(grille:list)->None:
             if contientMineGrilleDemineur(grille,(i,j))==False:
                 lst=getCoordonneeVoisinsGrilleDemineur(grille,(i,j))
                 nb=0
-                for coord in range(len(lst)):
-                    if getContenuGrilleDemineur(grille,lst[coord])==const.ID_MINE:
+                for coord in lst:
+                    if contientMineGrilleDemineur(grille,coord)==True:
                         nb+=1
                 setContenuGrilleDemineur(grille,(i,j),nb)
     return None
@@ -165,10 +165,15 @@ def getNbMinesGrilleDemineur(grille: list) -> int:
     if type_grille_demineur(grille) == False:
         raise ValueError("getNbMinesGrilleDemineur : le paramètre n’est pas une grille")
     nb=0
-    for i in range(getNbLignesGrilleDemineur(grille)):
-        for j in range(getNbColonnesGrilleDemineur(grille)):
+    i=0
+    j=0
+    while i <getNbLignesGrilleDemineur(grille):
+        while j<getNbColonnesGrilleDemineur(grille):
             if contientMineGrilleDemineur(grille,(i,j))==True:
                 nb+=1
+            j+=1
+        j=0
+        i+=1
     return nb
 
 def getAnnotationGrilleDemineur(grille:list,coord:tuple)->None:
@@ -176,31 +181,24 @@ def getAnnotationGrilleDemineur(grille:list,coord:tuple)->None:
 
 def getMinesRestantesGrilleDemineur(grille: list) -> int:
     nb=getNbMinesGrilleDemineur(grille)
-    for i in range(getNbLignesGrilleDemineur(grille)):
-        for j in range(getNbColonnesGrilleDemineur(grille)):
-            if getAnnotationGrilleDemineur(grille,(i,j))==const.FLAG :
-              nb-=1
-    return nb
-
-def perduGrilleDemineur(grille:list)->bool:
-    res=False
     i=0
     j=0
-    while i<getNbLignesGrilleDemineur(grille) and  res==False:
-        while j<getNbColonnesGrilleDemineur(grille):
-            if contientMineGrilleDemineur(grille,(i,j))==True:
-                if isVisibleGrilleDemineur(grille,(i,j))==True:
-                    res=True
-            j+=1
+    while i < getNbLignesGrilleDemineur(grille) :
+        while j < getNbColonnesGrilleDemineur(grille):
+            if getAnnotationGrilleDemineur(grille, (i, j)) == const.FLAG:
+                nb -= 1
+            j += 1
         j = 0
-        i+=1
-    return res
+        i += 1
+    return nb
+
+
 
 def gagneGrilleDemineur(grille:list)->bool:
     res = True
     i = 0
     j = 0
-    while i < getNbLignesGrilleDemineur(grille) and res == True:
+    while i < getNbLignesGrilleDemineur(grille) and res==True:
         while j < getNbColonnesGrilleDemineur(grille):
             if contientMineGrilleDemineur(grille, (i, j)) == True :
                 if isVisibleGrilleDemineur(grille, (i, j)) == True:
@@ -214,8 +212,23 @@ def gagneGrilleDemineur(grille:list)->bool:
         i += 1
     return res
 
+def perduGrilleDemineur(grille:list)->bool:
+    res=False
+    i=0
+    j=0
+    while i<getNbLignesGrilleDemineur(grille) and  res==False:
+        while j<getNbColonnesGrilleDemineur(grille):
+            if contientMineGrilleDemineur(grille,(i,j))==True:
+                if isVisibleGrilleDemineur(grille,(i,j))==True:
+                    res=True
+            j+=1
+        j = 0
+        i+=1
+
+    return res
 def reinitialiserGrilleDemnieur(grille:list)->None:
     for i in range(getNbLignesGrilleDemineur(grille)):
         for j in range(getNbColonnesGrilleDemineur(grille)):
             reinitialiserCellule(grille[i][j])
     return None
+
