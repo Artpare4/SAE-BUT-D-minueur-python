@@ -77,16 +77,13 @@ def getNbColonnesGrilleDemineur(grille:list)->int:
 def isCoordonneeCorrecte(grille:list,coord:tuple)->bool:
     if type_grille_demineur(grille)==False or type(coord)!=tuple:
         raise TypeError("isCoordonneeCorrecte : un des paramètres n’est pas du bon type.")
-    i=0
-    j=0
     res=False
-    while i<getNbLignesGrilleDemineur(grille) and res==False :
-        j = 0
-        while j<getNbColonnesGrilleDemineur(grille):
-            if (i,j)==coord:
-                res=True
-            j+=1
-        i+=1
+    (i,j)=coord
+    if i>=0 :
+        if i<getNbLignesGrilleDemineur(grille):
+            if j>=0:
+                if j<getNbColonnesGrilleDemineur(grille):
+                    res=True
     return res
 
 def getCelluleGrilleDemineur(grille:list,coord:tuple)->dict:
@@ -167,8 +164,10 @@ def getNbMinesGrilleDemineur(grille: list) -> int:
     nb=0
     i=0
     j=0
-    while i <getNbLignesGrilleDemineur(grille):
-        while j<getNbColonnesGrilleDemineur(grille):
+    ligne=getNbLignesGrilleDemineur(grille)
+    colonne=getNbColonnesGrilleDemineur(grille)
+    while i < ligne:
+        while j<colonne:
             if contientMineGrilleDemineur(grille,(i,j))==True:
                 nb+=1
             j+=1
@@ -183,8 +182,10 @@ def getMinesRestantesGrilleDemineur(grille: list) -> int:
     nb=getNbMinesGrilleDemineur(grille)
     i=0
     j=0
-    while i < getNbLignesGrilleDemineur(grille) :
-        while j < getNbColonnesGrilleDemineur(grille):
+    ligne=getNbLignesGrilleDemineur(grille)
+    colonne=getNbColonnesGrilleDemineur(grille)
+    while i <ligne :
+        while j < colonne:
             if getAnnotationGrilleDemineur(grille, (i, j)) == const.FLAG:
                 nb -= 1
             j += 1
@@ -198,14 +199,16 @@ def gagneGrilleDemineur(grille:list)->bool:
     res = True
     i = 0
     j = 0
-    while i < getNbLignesGrilleDemineur(grille) and res==True:
-        while j < getNbColonnesGrilleDemineur(grille):
-            if contientMineGrilleDemineur(grille, (i, j)) == True and isVisibleGrilleDemineur(grille, (i, j)) == True and getAnnotationGrilleDemineur(grille,(i,j))==const.FLAG:
-                #if isVisibleGrilleDemineur(grille, (i, j)) == True:
-                    #if getAnnotationGrilleDemineur(grille,(i,j))==const.FLAG:
+    ligne=getNbLignesGrilleDemineur(grille)
+    colonne=getNbColonnesGrilleDemineur(grille)
+    while i <ligne and res==True:
+        while j < colonne:
+            if contientMineGrilleDemineur(grille, (i, j)) == True :
+                if isVisibleGrilleDemineur(grille, (i, j)) == True:
+                    if getAnnotationGrilleDemineur(grille,(i,j))==const.FLAG:
                         res = False
-            elif contientMineGrilleDemineur(grille, (i, j)) == False and isVisibleGrilleDemineur(grille,(i,j))==False:
-                #if isVisibleGrilleDemineur(grille,(i,j))==False:
+            else:
+                if isVisibleGrilleDemineur(grille,(i,j))==False:
                     res=False
             j += 1
         j = 0
@@ -216,8 +219,10 @@ def perduGrilleDemineur(grille:list)->bool:
     res=False
     i=0
     j=0
-    while i<getNbLignesGrilleDemineur(grille) and  res==False:
-        while j<getNbColonnesGrilleDemineur(grille) and not res:
+    ligne=getNbLignesGrilleDemineur(grille)
+    colonne=getNbColonnesGrilleDemineur(grille)
+    while i<ligne and  res==False:
+        while j<colonne :
             if contientMineGrilleDemineur(grille,(i,j))==True:
                 if isVisibleGrilleDemineur(grille,(i,j))==True:
                     res=True
@@ -225,6 +230,7 @@ def perduGrilleDemineur(grille:list)->bool:
         j = 0
         i+=1
     return res
+
 def reinitialiserGrilleDemineur(grille:list)->None:
     for i in range(getNbLignesGrilleDemineur(grille)):
         for j in range(getNbColonnesGrilleDemineur(grille)):
@@ -242,4 +248,3 @@ def decouvrirGrilleDemineur(grille:list,coord:tuple)->set:
                 if getContenuGrilleDemineur(grille,i)==0:
                     decouvrirGrilleDemineur(grille,i)
 
-    return res
