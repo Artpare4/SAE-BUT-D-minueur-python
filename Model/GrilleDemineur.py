@@ -254,3 +254,16 @@ def decouvrirGrilleDemineur(grille:list,coord:tuple)->set:
             else:
                 lst.remove(i)
     return res
+
+def simplifierGrilleDemineur (grille:list,coord:tuple)->set:
+    res=set()
+    if isVisibleGrilleDemineur(grille,coord)==False:
+        lst = getCoordonneeVoisinsGrilleDemineur(grille, coord)
+        nbmine = 0
+        for i in lst:
+            if getAnnotationGrilleDemineur(grille, i) == const.FLAG:
+                nbmine += 1
+                lst.remove(i)
+        if nbmine == getContenuGrilleDemineur(grille, coord):
+            res = set(lst)
+    return res
