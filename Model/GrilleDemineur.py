@@ -237,14 +237,20 @@ def reinitialiserGrilleDemineur(grille:list)->None:
             reinitialiserCellule(grille[i][j])
     return None
 
-res=set()
 def decouvrirGrilleDemineur(grille:list,coord:tuple)->set:
-    voisin=getCoordonneeVoisinsGrilleDemineur(grille,coord)
-    global res
-    for i in voisin:
-        if i not in res:
-            if contientMineGrilleDemineur(grille,i)==False:
-                res.add(i)
-                if getContenuGrilleDemineur(grille,i)==0:
-                    decouvrirGrilleDemineur(grille,i)
-
+    lst=getCoordonneeVoisinsGrilleDemineur(grille,coord)
+    res=set()
+    res.add(coord)
+    while len(lst)>0:
+        for i in lst:
+            if i not in res:
+                if contientMineGrilleDemineur(grille,i)==False:
+                    res.add(i)
+                    lst.remove(i)
+                    if getContenuGrilleDemineur(grille,i)==0:
+                        lst.extend(getCoordonneeVoisinsGrilleDemineur(grille,i))
+                else:
+                    lst.remove(i)
+            else:
+                lst.remove(i)
+    return res
