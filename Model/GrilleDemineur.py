@@ -254,18 +254,29 @@ def decouvrirGrilleDemineur(grille:list,coord:tuple)->set:
                 lst.remove(i)
     return res
 
+
+
 def simplifierGrilleDemineur (grille:list,coord:tuple)->set:
-    res=set()
+    res = set()
     if isVisibleGrilleDemineur(grille,coord)==False:
         lst = getCoordonneeVoisinsGrilleDemineur(grille, coord)
+        print(lst)
         nbmine = 0
         for i in lst:
-            if getAnnotationGrilleDemineur(grille, i) == const.FLAG:
-                nbmine += 1
-                lst.remove(i)
+                if getAnnotationGrilleDemineur(grille, i) == const.FLAG:
+                    nbmine += 1
+                    lst.remove(i)
+        print(lst)
         if nbmine == getContenuGrilleDemineur(grille, coord):
             res = set(lst)
+        for j in res:
+            res=res|simplifierGrilleDemineur(grille,j)
     return res
+
+
+
+
+
 
 
 
@@ -279,7 +290,6 @@ def ajouterFlagsGrilleDemineur(grille:list,coord:list)->set:
         else:
             lst.remove(i)
     if nbcase==getContenuGrilleDemineur(grille,coord):
+
         res=set(lst)
     return res
-
-
