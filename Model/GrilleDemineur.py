@@ -269,8 +269,6 @@ def simplifierGrilleDemineur (grille:list,coord:tuple)->set:
         print(lst)
         if nbmine == getContenuGrilleDemineur(grille, coord):
             res = set(lst)
-        for j in res:
-            res=res|simplifierGrilleDemineur(grille,j)
     return res
 
 
