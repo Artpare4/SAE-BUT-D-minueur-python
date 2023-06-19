@@ -1,7 +1,24 @@
 # PyDemineur
 
-Démineur en Python/PyGame (pour la SAE 1 & 2)
+Projet de jeu du démineur en python.
+Ce projet à été réalisé au cours du premier semestre de la première année du BUT informatique.
+Tous les fichiers exepté les fichiers :
+- ```Cellules.py```
+- ```Coordonnee.py```
+- ```GrilleDemineur.py```
+ 
+servant à implémentés les fonctions/méthodes demandées, nous fut donnés par les professeurs dans le but de pouvoir faire fonctionner le jeu démineur et les tests de ces méthodes.
+## Lancer le jeu
 
+Principe: Principe basique du jeu du démnieur
+Touches:
+- Clique gauche: découvre une mine
+- Clique droit: place un drapeau
+Pour réinitialisé la partie, cliquez sur le bouton orange sur la fenêtre du jeu.
+
+Pour exécuter le jeu
+- Ajout le module python ```pygame``` d'activé
+- Exécuter le fichier ```main.py``` à la racine du projet
 ## Préparer l'environnement Python
 
 Vérifier que PyGame est bien installé sur le système utilisé. Le plus simple est
